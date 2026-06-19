@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <defs>
+    <linearGradient id="logoGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#fbbf24" />
+    </linearGradient>
+  </defs>
+  <rect width="120" height="120" rx="30" fill="#0f172a" />
+  <path d="M30 28h60c2.761 0 5 2.239 5 5v54c0 2.761-2.239 5-5 5H30c-2.761 0-5-2.239-5-5V33c0-2.761 2.239-5 5-5Z" fill="#111827" stroke="url(#logoGradient)" stroke-width="4" />
+  <text x="50%" y="52%" text-anchor="middle" fill="url(#logoGradient)" font-family="Inter, sans-serif" font-size="32" font-weight="700" letter-spacing="0.06em">CK</text>
+  <text x="50%" y="74%" text-anchor="middle" fill="#f8fafc" font-family="Inter, sans-serif" font-size="10" font-weight="600" letter-spacing="0.2em">PREMIUM</text>
+</svg>

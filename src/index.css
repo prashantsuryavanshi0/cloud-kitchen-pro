@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  font-family: var(--font-body);
+  background-color: #ffffff;
+  color: #000000;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background: #ffffff;
+  color: #000000;
+}
+
+button,
+a {
+  transition: all 0.25s ease;
+}
+
+.container {
+  @apply mx-auto px-6 xl:px-16;
+}
+
+.glass-card {
+  @apply bg-white/10 backdrop-blur-xl border border-white/10 rounded-[32px];
+}
+
+.glow-ring {
+  box-shadow: 0 0 120px rgba(255, 107, 53, 0.16);
+}
+
+.card-hover:hover {
+  transform: translateY(-10px) scale(1.01);
+}
+
+section {
+  position: relative;
+}
+
+.scroll-indicator {
+  position: fixed;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 50;
+}
+
+.backdrop-glow {
+  background: radial-gradient(circle at center, rgba(255, 107, 53, 0.22), transparent 45%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(circle at top left, rgba(255, 107, 53, 0.12), transparent 20%),
+    radial-gradient(circle at bottom right, rgba(255, 182, 39, 0.14), transparent 18%),
+    #0f172a;
+}
+
+button,
+a {
+  transition: all 0.25s ease;
+}
+
+.container {
+  @apply mx-auto px-6 xl:px-16;
+}
+
+.glass-card {
+  @apply bg-white/10 backdrop-blur-xl border border-white/10 rounded-[32px];
+}
+
+.glow-ring {
+  box-shadow: 0 0 120px rgba(255, 107, 53, 0.16);
+}
+
+.card-hover:hover {
+  transform: translateY(-10px) scale(1.01);
+}
+
+section {
+  position: relative;
+}
+
+.scroll-indicator {
+  position: fixed;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 50;
+}
+
+.backdrop-glow {
+  background: radial-gradient(circle at center, rgba(255, 107, 53, 0.22), transparent 45%);
+}

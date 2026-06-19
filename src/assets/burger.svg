@@ -1,0 +1,18 @@
+<svg viewBox="0 0 260 260" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bunTop" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFBD5A" />
+      <stop offset="100%" stop-color="#FFA656" />
+    </linearGradient>
+  </defs>
+  <rect x="28" y="74" width="204" height="96" rx="48" fill="url(#bunTop)" />
+  <rect x="44" y="110" width="172" height="32" rx="16" fill="#8B4E2B" />
+  <rect x="38" y="138" width="186" height="22" rx="12" fill="#D9480F" />
+  <g fill="#FFE7B3">
+    <circle cx="80" cy="80" r="6" />
+    <circle cx="120" cy="70" r="6" />
+    <circle cx="160" cy="84" r="6" />
+    <circle cx="190" cy="76" r="6" />
+  </g>
+  <path d="M40 122 C70 100 190 102 220 122" fill="none" stroke="#FDDCA1" stroke-width="14" stroke-linecap="round" />
+</svg>
