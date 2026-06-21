@@ -1,10 +1,11 @@
 import { useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Clock3, Search, ShoppingCart, Star, X } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 const suggestions = ['Pizza', 'Biryani', 'Dessert', 'Veg', 'Chef Special']
 
-export default function SearchOverlay({ open, onClose, dishes = [], onAddToCart, onQuickView }) {
+export default function SearchOverlay({ open, onClose, dishes = [], onAddToCart }) {
   const [query, setQuery] = useState('')
   const filtered = useMemo(() => {
     const value = query.trim().toLowerCase()
@@ -66,7 +67,7 @@ export default function SearchOverlay({ open, onClose, dishes = [], onAddToCart,
                     <div className="mt-3 flex flex-wrap items-center gap-3 text-xs text-slate-300">
                       <span className="inline-flex items-center gap-1 text-amber-200"><Star size={14} fill="currentColor" /> {dish.rating}</span>
                       <span className="inline-flex items-center gap-1"><Clock3 size={14} /> {dish.time}</span>
-                      <button onClick={() => onQuickView?.(dish)} className="ml-auto rounded-full border border-white/10 px-3 py-1 hover:bg-white/10">View</button>
+                      <Link to={`/menu/${dish.slug}`} onClick={onClose} className="ml-auto rounded-full border border-white/10 px-3 py-1 hover:bg-white/10">View</Link>
                       <button onClick={() => onAddToCart?.(dish)} className="rounded-full bg-gradient-to-r from-primary to-secondary px-3 py-1 font-semibold text-darkbg">
                         <ShoppingCart size={13} />
                       </button>

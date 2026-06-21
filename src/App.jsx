@@ -34,81 +34,8 @@ import SearchOverlay from './components/SearchOverlay'
 import WishlistPanel from './components/WishlistPanel'
 import FallbackImage from './components/FallbackImage'
 import logoImg from './assets/logo.svg'
-
-const heroSlides = [
-  'https://images.pexels.com/photos/315755/pexels-photo-315755.jpeg?auto=compress&cs=tinysrgb&w=1600',
-  'https://images.pexels.com/photos/1639565/pexels-photo-1639565.jpeg?auto=compress&cs=tinysrgb&w=1600',
-  'https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=1600',
-]
-
-const dishes = [
-  {
-    name: 'Truffle Cloud Pizza',
-    price: 'Rs. 899',
-    tag: 'Bestseller',
-    type: 'Veg',
-    rating: 4.9,
-    time: '18 min',
-    hot: true,
-    description: 'Wood-fired crust, black truffle cream, burrata, basil oil.',
-    image: heroSlides[0],
-  },
-  {
-    name: 'Wagyu Smash Burger',
-    price: 'Rs. 1,250',
-    tag: 'Trending',
-    type: 'Non-Veg',
-    rating: 4.8,
-    time: '16 min',
-    hot: true,
-    description: 'Double seared patty, aged cheddar, smoked aioli, brioche.',
-    image: heroSlides[1],
-  },
-  {
-    name: 'Saffron Royal Biryani',
-    price: 'Rs. 1,099',
-    tag: 'Chef Special',
-    type: 'Non-Veg',
-    rating: 5.0,
-    time: '22 min',
-    hot: true,
-    description: 'Dum-cooked basmati, saffron, tender chicken, rose onions.',
-    image: 'https://images.pexels.com/photos/9738983/pexels-photo-9738983.jpeg?auto=compress&cs=tinysrgb&w=900',
-  },
-  {
-    name: 'Velvet Parmesan Pasta',
-    price: 'Rs. 799',
-    tag: 'Signature',
-    type: 'Veg',
-    rating: 4.7,
-    time: '14 min',
-    hot: true,
-    description: 'Silky parmesan sauce, roasted garlic, herb crumbs.',
-    image: heroSlides[2],
-  },
-  {
-    name: 'Crystal Chili Momos',
-    price: 'Rs. 649',
-    tag: 'Hot Pick',
-    type: 'Veg',
-    rating: 4.8,
-    time: '12 min',
-    hot: true,
-    description: 'Steam-finished dumplings, chili crisp, scallion oil.',
-    image: 'https://images.pexels.com/photos/18803174/pexels-photo-18803174.jpeg?auto=compress&cs=tinysrgb&w=900',
-  },
-  {
-    name: 'Gold Leaf Dessert',
-    price: 'Rs. 599',
-    tag: 'Luxury',
-    type: 'Veg',
-    rating: 4.9,
-    time: '10 min',
-    hot: false,
-    description: 'Salted caramel cream, berry compote, edible gold.',
-    image: 'https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg?auto=compress&cs=tinysrgb&w=900',
-  },
-]
+import { Link } from 'react-router-dom'
+import { foodData as dishes } from './data/foodData'
 
 const stats = [
   { label: 'Orders Delivered', value: 24800, suffix: '+', icon: Truck, progress: 92 },
@@ -276,7 +203,6 @@ function App() {
   const [wishlistItems, setWishlistItems] = useState([])
   const [showBackToTop, setShowBackToTop] = useState(false)
   const [activeReview, setActiveReview] = useState(0)
-  const [quickDish, setQuickDish] = useState(null)
   const [chefStory, setChefStory] = useState(null)
   const [toast, setToast] = useState('')
   const [newsletterEmail, setNewsletterEmail] = useState('')
@@ -315,6 +241,14 @@ function App() {
   useEffect(() => {
     const timer = setTimeout(() => setLoaded(true), 850)
     return () => clearTimeout(timer)
+  }, [])
+
+  useEffect(() => {
+    document.title = 'Cloud Kitchen | Michelin-Inspired Food Delivery'
+    const description = document.querySelector('meta[name="description"]')
+    if (description) description.content = 'Explore chef-curated signature meals, premium packaging, and precision delivery from Cloud Kitchen.'
+    const canonical = document.querySelector('link[rel="canonical"]')
+    if (canonical) canonical.href = `${window.location.origin}/`
   }, [])
 
   useEffect(() => {
@@ -414,7 +348,7 @@ function App() {
         )}
       </AnimatePresence>
 
-      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} dishes={dishes} onAddToCart={addToCart} onQuickView={setQuickDish} />
+      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} dishes={dishes} onAddToCart={addToCart} />
       <CartSidebar open={cartOpen} onClose={() => setCartOpen(false)} cartItems={cartItems} onRemove={(index) => setCartItems((items) => items.filter((_, i) => i !== index))} onCheckout={handleCheckout} />
       <WishlistPanel open={wishlistOpen} onClose={() => setWishlistOpen(false)} wishlist={wishlistItems} />
       <ChatbotPanel open={chatOpen} onClose={() => setChatOpen(false)} />
@@ -481,9 +415,9 @@ function App() {
                 <MagneticButton onClick={() => document.getElementById('menu')?.scrollIntoView({ behavior: 'smooth' })} className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-amber-300 via-yellow-200 to-orange-400 px-8 py-4 font-semibold text-slate-950">
                   Reserve Dinner <ArrowRight size={18} />
                 </MagneticButton>
-                <button onClick={() => setQuickDish(dishes[0])} className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/10 px-8 py-4 font-semibold text-white backdrop-blur-xl hover:bg-white/15">
+                <Link to={`/menu/${dishes[0].slug}`} className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/10 px-8 py-4 font-semibold text-white backdrop-blur-xl hover:bg-white/15">
                   <Play size={18} /> View Signature
-                </button>
+                </Link>
               </div>
               <div className="mt-10 grid gap-4 sm:grid-cols-4">
                 {stats.map((stat, index) => (
@@ -500,12 +434,12 @@ function App() {
               <motion.div className="premium-panel relative overflow-hidden rounded-[2rem] p-4" style={{ rotateX: heroRotateX, rotateY: heroRotateY, transformStyle: 'preserve-3d' }}>
                 <div className="steam steam-one" />
                 <div className="steam steam-two" />
-                <FallbackImage src={heroSlides[0]} alt="Premium dish" className="h-[520px] w-full rounded-3xl object-cover" />
+                <FallbackImage src={dishes[0].image} alt="Premium dish" className="h-[520px] w-full rounded-3xl object-cover" />
                 <div className="absolute inset-4 rounded-3xl bg-gradient-to-t from-black/70 via-transparent to-white/5" />
                 <div className="absolute bottom-8 left-8 right-8 flex items-end justify-between gap-4">
                   <div>
                     <p className="premium-eyebrow">Tonight's signature</p>
-                    <h3 className="mt-2 text-2xl font-semibold">Truffle Cloud Pizza</h3>
+                    <h3 className="mt-2 text-2xl font-semibold">{dishes[0].name}</h3>
                   </div>
                   <span className="rounded-full bg-emerald-400/20 px-4 py-2 text-sm text-emerald-100 ring-1 ring-emerald-300/30">Live order</span>
                 </div>
@@ -560,7 +494,7 @@ function App() {
         </section>
 
         <section id="menu" className="container py-24">
-          <SectionTitle label="Popular dishes" title="Luxury glass cards with quick-view ordering" text="Every card has depth, badges, ratings, preparation time, shine, wishlist animation, and a fast cart flow." />
+          <SectionTitle label="Signature meals" title="A complete marketplace of chef-curated courses" text="Explore twelve signature dishes, each with its own story, gallery, nutrition profile, chef notes, and dedicated ordering experience." />
           <div className="grid gap-7 md:grid-cols-2 xl:grid-cols-3">
             {dishes.map((dish, index) => (
               <Reveal key={dish.name} delay={index * 0.05}>
@@ -572,6 +506,7 @@ function App() {
                       <div className="shine" />
                     </div>
                     <FoodSteamLayer visible={dish.hot} />
+                    <Link to={`/menu/${dish.slug}`} className="absolute inset-0 z-[6]" aria-label={`View ${dish.name} details`} />
                     <div className="gold-sparkles" aria-hidden="true">
                       <span />
                       <span />
@@ -602,7 +537,7 @@ function App() {
                       <span className="inline-flex items-center gap-1"><Clock3 size={15} /> {dish.time}</span>
                     </div>
                     <div className="flex gap-2">
-                      <button onClick={() => setQuickDish(dish)} className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm hover:bg-white/10">Quick view</button>
+                      <Link to={`/menu/${dish.slug}`} className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm hover:bg-white/10">View details</Link>
                       <button onClick={() => addToCart(dish)} className="luxury-button rounded-full bg-gradient-to-r from-amber-300 to-orange-400 px-4 py-2 text-sm font-semibold text-slate-950">Add</button>
                     </div>
                   </div>
@@ -758,15 +693,17 @@ function App() {
                 </motion.div>
 
                 <div className="app-side-stack">
-                  <motion.button onClick={() => setQuickDish(dishes[2])} className="app-floating-card app-menu-card text-left" animate={{ y: [-6, 6, -6] }} transition={{ duration: 5.8, repeat: Infinity, ease: 'easeInOut' }}>
-                    <FallbackImage src={dishes[2].image} alt="Chef special" className="h-40 w-full rounded-2xl object-cover" />
+                  <Link to={`/menu/${dishes[1].slug}`}>
+                  <motion.div className="app-floating-card app-menu-card text-left" animate={{ y: [-6, 6, -6] }} transition={{ duration: 5.8, repeat: Infinity, ease: 'easeInOut' }}>
+                    <FallbackImage src={dishes[1].image} alt="Chef special" className="h-40 w-full rounded-2xl object-cover" />
                     <p className="mt-4 text-xs uppercase tracking-[0.26em] text-amber-200">Chef Special</p>
-                    <h3 className="mt-2 text-2xl font-semibold">Saffron Royal Biryani</h3>
+                    <h3 className="mt-2 text-2xl font-semibold">{dishes[1].name}</h3>
                     <div className="mt-4 flex items-center justify-between text-sm text-slate-300">
                       <span className="inline-flex items-center gap-1 text-amber-200"><Star size={15} fill="currentColor" /> 5.0</span>
                       <span>22 min</span>
                     </div>
-                  </motion.button>
+                  </motion.div>
+                  </Link>
 
                   <motion.button onClick={() => document.getElementById('tracker')?.scrollIntoView({ behavior: 'smooth' })} className="app-floating-card app-route-card text-left" animate={{ y: [6, -6, 6] }} transition={{ duration: 6.2, repeat: Infinity, ease: 'easeInOut' }}>
                     <div className="flex items-center justify-between">
@@ -851,28 +788,6 @@ function App() {
       </footer>
 
       <MobileBottomNav active={bottomActive} onSelect={handleBottomSelect} />
-
-      {quickDish && (
-        <div className="fixed inset-0 z-[70] grid place-items-center bg-black/70 p-5 backdrop-blur-xl" onClick={() => setQuickDish(null)}>
-          <motion.div initial={{ opacity: 0, scale: 0.92 }} animate={{ opacity: 1, scale: 1 }} className="premium-panel max-w-3xl overflow-hidden rounded-[2rem]" onClick={(event) => event.stopPropagation()}>
-            <div className="grid md:grid-cols-2">
-              <FallbackImage src={quickDish.image} alt={quickDish.name} className="h-full min-h-[360px] w-full object-cover" />
-              <div className="p-8">
-                <p className="badge-gold inline-flex">{quickDish.tag}</p>
-                <h3 className="mt-5 text-3xl font-semibold">{quickDish.name}</h3>
-                <p className="mt-4 leading-7 text-slate-300">{quickDish.description}</p>
-                <div className="mt-6 flex gap-5 text-sm text-slate-300">
-                  <span className="text-amber-200">{quickDish.rating} rating</span>
-                  <span>{quickDish.time}</span>
-                  <span>{quickDish.type}</span>
-                </div>
-                <p className="mt-8 text-3xl font-semibold text-amber-100">{quickDish.price}</p>
-                <button onClick={() => { addToCart(quickDish); setQuickDish(null); }} className="luxury-button mt-8 w-full rounded-full bg-gradient-to-r from-amber-300 to-orange-400 px-7 py-4 font-semibold text-slate-950">Add to cart</button>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      )}
 
       {chefStory && (
         <div className="fixed inset-0 z-[70] grid place-items-center bg-black/70 p-5 backdrop-blur-xl" onClick={() => setChefStory(null)}>
