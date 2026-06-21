@@ -48,6 +48,9 @@ export default function ChatbotPanel({ open, onClose }) {
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') send()
+          }}
           placeholder="Ask about menu or delivery"
           className="flex-1 rounded-full border border-white/10 bg-slate-900/80 px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-secondary/40"
         />

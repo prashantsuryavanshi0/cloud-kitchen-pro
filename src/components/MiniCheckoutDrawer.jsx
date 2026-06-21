@@ -3,7 +3,7 @@ import { ArrowRight, CreditCard } from 'lucide-react'
 
 const parseAmount = (price) => Number(price.replace(/[^0-9.]/g, ''))
 
-export default function MiniCheckoutDrawer({ open, onClose, items }) {
+export default function MiniCheckoutDrawer({ open, onClose, items, onCheckout }) {
   const total = items.reduce((sum, item) => sum + parseAmount(item.price), 0)
   return (
     <motion.div
@@ -35,9 +35,9 @@ export default function MiniCheckoutDrawer({ open, onClose, items }) {
       <div className="mt-6 flex items-center justify-between rounded-3xl border border-white/10 bg-gradient-to-r from-primary/10 to-secondary/10 px-5 py-4">
         <div>
           <p className="text-sm text-slate-400">Total</p>
-          <p className="mt-1 text-2xl font-semibold text-white">₹{total.toFixed(2)}</p>
+          <p className="mt-1 text-2xl font-semibold text-white">Rs. {total.toFixed(2)}</p>
         </div>
-        <button className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-primary to-secondary px-5 py-3 text-sm font-semibold text-darkbg shadow-soft">
+        <button onClick={onCheckout} className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-primary to-secondary px-5 py-3 text-sm font-semibold text-darkbg shadow-soft">
           Checkout <CreditCard size={18} />
         </button>
       </div>

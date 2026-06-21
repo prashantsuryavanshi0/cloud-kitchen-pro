@@ -3,15 +3,15 @@ import { CheckCircle2, CreditCard, Package, X } from 'lucide-react'
 
 const parseAmount = (price) => Number(price.replace(/[^0-9.]/g, ''))
 
-export default function CartSidebar({ open, onClose, cartItems, onRemove }) {
+export default function CartSidebar({ open, onClose, cartItems, onRemove, onCheckout }) {
   const subtotal = cartItems.reduce((sum, item) => sum + parseAmount(item.price), 0)
 
   return (
     <motion.aside
       initial={{ x: '100%' }}
       animate={{ x: open ? 0 : '100%' }}
-      transition={{ type: 'spring', stiffness: 220, damping: 24 }}
-      className="fixed right-0 top-0 z-50 h-full w-full max-w-md bg-slate-950/95 shadow-2xl backdrop-blur-2xl md:w-[420px]"
+      transition={{ type: 'spring', stiffness: 190, damping: 22 }}
+      className="cart-drawer fixed right-0 top-0 z-50 h-full w-full max-w-md shadow-2xl backdrop-blur-2xl md:w-[420px]"
     >
       <div className="flex items-center justify-between border-b border-white/10 px-6 py-5">
         <div>
@@ -31,7 +31,13 @@ export default function CartSidebar({ open, onClose, cartItems, onRemove }) {
         ) : (
           <div className="space-y-4">
             {cartItems.map((item, index) => (
-              <div key={`${item.name}-${index}`} className="rounded-[28px] border border-white/10 bg-white/5 p-4">
+              <motion.div
+                key={`${item.name}-${index}`}
+                initial={{ opacity: 0, x: 24, scale: 0.96 }}
+                animate={{ opacity: 1, x: 0, scale: 1 }}
+                transition={{ delay: index * 0.05 }}
+                className="cart-line rounded-[28px] border border-white/10 bg-white/5 p-4"
+              >
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <p className="text-lg font-semibold text-white">{item.name}</p>
@@ -44,7 +50,7 @@ export default function CartSidebar({ open, onClose, cartItems, onRemove }) {
                     </button>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         )}
@@ -52,9 +58,9 @@ export default function CartSidebar({ open, onClose, cartItems, onRemove }) {
       <div className="mt-auto border-t border-white/10 px-6 py-6">
         <div className="flex items-center justify-between text-sm text-slate-300">
           <span>Subtotal</span>
-          <span className="text-white">₹{subtotal.toFixed(2)}</span>
+          <span className="text-white">Rs. {subtotal.toFixed(2)}</span>
         </div>
-        <button className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-primary to-secondary px-6 py-4 text-sm font-semibold text-darkbg shadow-soft transition hover:-translate-y-0.5">
+        <button onClick={onCheckout} className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-primary to-secondary px-6 py-4 text-sm font-semibold text-darkbg shadow-soft transition hover:-translate-y-0.5">
           <CreditCard size={18} /> Checkout
         </button>
         <div className="mt-5 flex items-center gap-3 rounded-3xl bg-white/5 p-4 text-sm text-slate-300">
