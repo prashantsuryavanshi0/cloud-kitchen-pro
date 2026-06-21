@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import Lenis from 'lenis'
 import { AnimatePresence, motion, useMotionValue, useScroll, useSpring, useTransform } from 'framer-motion'
 import {
@@ -34,8 +34,11 @@ import SearchOverlay from './components/SearchOverlay'
 import WishlistPanel from './components/WishlistPanel'
 import FallbackImage from './components/FallbackImage'
 import logoImg from './assets/logo.svg'
+import sizzlerImg from './assets/smoky-peri-peri-sizzler.png'
 import { Link } from 'react-router-dom'
 import { foodData as dishes } from './data/foodData'
+
+const SizzlerEffects = lazy(() => import('./components/SizzlerEffects'))
 
 const stats = [
   { label: 'Orders Delivered', value: 24800, suffix: '+', icon: Truck, progress: 92 },
@@ -415,9 +418,9 @@ function App() {
                 <MagneticButton onClick={() => document.getElementById('menu')?.scrollIntoView({ behavior: 'smooth' })} className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-amber-300 via-yellow-200 to-orange-400 px-8 py-4 font-semibold text-slate-950">
                   Reserve Dinner <ArrowRight size={18} />
                 </MagneticButton>
-                <Link to={`/menu/${dishes[0].slug}`} className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/10 px-8 py-4 font-semibold text-white backdrop-blur-xl hover:bg-white/15">
-                  <Play size={18} /> View Signature
-                </Link>
+                <button onClick={() => document.getElementById('menu')?.scrollIntoView({ behavior: 'smooth' })} className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/10 px-8 py-4 font-semibold text-white backdrop-blur-xl hover:bg-white/15">
+                  <Play size={18} /> Explore Signature
+                </button>
               </div>
               <div className="mt-10 grid gap-4 sm:grid-cols-4">
                 {stats.map((stat, index) => (
@@ -431,24 +434,30 @@ function App() {
 
             <motion.div className="relative mx-auto w-full max-w-xl perspective-hero" style={{ x: heroX, y: heroY }}>
               <motion.div className="hero-glow" animate={{ scale: [0.96, 1.05, 0.96], opacity: [0.55, 0.9, 0.55] }} transition={{ duration: 5, repeat: Infinity }} />
-              <motion.div className="premium-panel relative overflow-hidden rounded-[2rem] p-4" style={{ rotateX: heroRotateX, rotateY: heroRotateY, transformStyle: 'preserve-3d' }}>
-                <div className="steam steam-one" />
-                <div className="steam steam-two" />
-                <FallbackImage src={dishes[0].image} alt="Premium dish" className="h-[520px] w-full rounded-3xl object-cover" />
-                <div className="absolute inset-4 rounded-3xl bg-gradient-to-t from-black/70 via-transparent to-white/5" />
-                <div className="absolute bottom-8 left-8 right-8 flex items-end justify-between gap-4">
+              <motion.div className="sizzler-showcase premium-panel relative overflow-hidden rounded-[2rem] p-4" initial={{ opacity: 0, scale: 0.92, rotateY: -8 }} animate={{ opacity: 1, scale: 1, rotateY: 0 }} transition={{ duration: 1, delay: 0.28, ease: [0.16, 1, 0.3, 1] }} style={{ rotateX: heroRotateX, rotateY: heroRotateY, transformStyle: 'preserve-3d' }}>
+                <div className="sizzler-fire-glow" />
+                <FallbackImage src={sizzlerImg} alt="Smoky Peri-Peri Sizzler with grilled chicken, steak, vegetables, corn, noodles and rice" loading="eager" className="sizzler-photo h-[520px] w-full rounded-3xl object-cover" />
+                <div className="sizzler-cinematic-shade" />
+                <div className="sizzler-heat-haze" aria-hidden="true"><span /><span /><span /></div>
+                <Suspense fallback={<div className="sizzler-webgl" aria-hidden="true" />}><SizzlerEffects /></Suspense>
+                <div className="sizzler-topline">
+                  <span className="sizzler-chef-tag"><Sparkles size={14} /> Chef's Signature</span>
+                  <span className="sizzler-live-badge"><i /> Live Sizzling</span>
+                </div>
+                <div className="sizzler-content">
                   <div>
-                    <p className="premium-eyebrow">Tonight's signature</p>
-                    <h3 className="mt-2 text-2xl font-semibold">{dishes[0].name}</h3>
+                    <p className="premium-eyebrow">Cast-iron theatre, served live</p>
+                    <h3>Smoky Peri-Peri Sizzler</h3>
+                    <p><Clock3 size={15} /> 26 min priority hot-table delivery</p>
                   </div>
-                  <span className="rounded-full bg-emerald-400/20 px-4 py-2 text-sm text-emerald-100 ring-1 ring-emerald-300/30">Live order</span>
+                  <span className="sizzler-temperature">240°<small>plate heat</small></span>
                 </div>
               </motion.div>
               <motion.div className="float-card left-0 top-16" animate={{ y: [-8, 8, -8] }} transition={{ duration: 5, repeat: Infinity }}>
-                <Clock3 size={18} className="text-amber-200" /> 24 min delivery
+                <Clock3 size={18} className="text-amber-200" /> 26 min hot-table dispatch
               </motion.div>
               <motion.div className="float-card right-0 top-28" animate={{ y: [8, -10, 8] }} transition={{ duration: 5.6, repeat: Infinity }}>
-                <BadgeCheck size={18} className="text-emerald-200" /> Tamper sealed
+                <BadgeCheck size={18} className="text-emerald-200" /> Cast-iron heat sealed
               </motion.div>
             </motion.div>
           </div>
